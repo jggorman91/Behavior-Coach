@@ -20,7 +20,28 @@
             <div id="home-screen" class="screen active">
                 <h2>Classroom Snapshot</h2>
                 <div class="card">
+                    <div class="input-group">
+                        <label for="grade-level">Grade Level:</label>
+                        <select id="grade-level">
+                            <option>Kindergarten</option>
+                            <option>1st Grade</option>
+                            <option>2nd Grade</option>
+                            <option>3rd Grade</option>
+                            <option>4th Grade</option>
+                            <option>5th Grade</option>
+                        </select>
                     </div>
+                    <div class="input-group">
+                        <label for="location">Location/Setting:</label>
+                        <select id="location">
+                            <option>Classroom</option>
+                            <option>Hallway</option>
+                            <option>Cafeteria</option>
+                            <option>Playground</option>
+                            <option>Transition</option>
+                        </select>
+                    </div>
+                </div>
                 <button id="log-behavior-btn" class="btn btn-primary">Log a Behavior</button>
                 <button id="load-plan-btn" class="btn">Load Custom BIP</button>
                 <button id="library-btn" class="btn">Resource Library</button>
@@ -30,15 +51,54 @@
                 <h2>Log a Behavior</h2>
                 <div class="card">
                     <div class="input-group">
+                        <label for="student-identifier">Student Identifier:</label>
+                        <select id="student-identifier">
+                            <option>Student A</option>
+                            <option>Student B</option>
+                            <option>Student C</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
                         <label for="common-behaviors">Select a Behavior:</label>
                         <select id="common-behaviors">
                             <option value="default" selected>-- Select One --</option>
                             <option value="Calling Out">Calling out answers/Talking out of turn</option>
-                            </select>
+                            <option value="Off-Task">Off-task (doodling, socializing)</option>
+                            <option value="Refusing Work">Refusing to work or follow instructions</option>
+                            <option value="Arguing">Arguing with teacher or peers</option>
+                            <option value="Physical Aggression">Physical aggression (hitting, kicking)</option>
+                            <option value="Emotional Outburst">Emotional outburst (tantrums, yelling)</option>
+                            <option value="Avoidance">Avoidance (head on desk, frequent restroom requests)</option>
+                        </select>
                     </div>
+                     <div class="input-group">
+                        <label for="custom-behavior">Or Describe the Behavior:</label>
+                        <input type="text" id="custom-behavior" placeholder="e.g., Threw a pencil">
                     </div>
-            </div>
+                </div>
 
+                <h3>Diagnose the "Why" (Function)</h3>
+                <div class="card function-buttons">
+                    <button class="btn function-btn" data-function="Sensory">
+                        <strong>Sensory</strong>
+                        <small>To get sensory stimulation</small>
+                    </button>
+                    <button class="btn function-btn" data-function="Escape">
+                        <strong>Escape</strong>
+                        <small>To avoid a task or person</small>
+                    </button>
+                    <button class="btn function-btn" data-function="Attention">
+                        <strong>Attention</strong>
+                        <small>To gain attention (peer or adult)</small>
+                    </button>
+                    <button class="btn function-btn" data-function="Tangible">
+                        <strong>Tangible</strong>
+                        <small>To get a preferred item or activity</small>
+                    </button>
+                </div>
+                <button class="btn btn-secondary back-btn" data-target="home-screen">Back</button>
+            </div>
+            
             <div id="custom-plan-screen" class="screen hidden">
                 <h2>Load Custom BIP</h2>
                 <div class="card">
@@ -65,16 +125,58 @@
                  <button class="btn btn-secondary back-btn" data-target="home-screen">Back</button>
             </div>
 
-
             <div id="strategy-screen" class="screen hidden">
-                 </div>
+                <h2>Suggested Strategy</h2>
+                <div class="card">
+                    <p id="strategy-text">Strategy text will appear here.</p>
+                </div>
+                <h3>Was this strategy effective?</h3>
+                <div class="feedback-buttons">
+                    <button id="effective-btn" class="btn btn-success">✔ Effective</button>
+                    <button id="ineffective-btn" class="btn btn-danger">✖ Not Effective</button>
+                </div>
+                 <button class="btn btn-secondary back-btn" data-target="log-behavior-screen">Back</button>
+            </div>
 
             <div id="library-screen" class="screen hidden">
+                 <h2>Resource Library</h2>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header">The Four Functions of Behavior (SEAT)</button>
+                        <div class="accordion-content">
+                            <p>All behavior is a form of communication that serves a purpose for the individual. The four primary functions are Sensory, Escape, Attention, and Tangibles. Understanding the function of the behavior, not just what it looks like, must guide the intervention strategy.</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header">Logical Consequences</button>
+                        <div class="accordion-content">
+                            <p>Logical consequences are a non-punitive way to respond to misbehavior that helps students learn from their mistakes while preserving their dignity. To be logical, a consequence must be Related, Respectful, Reasonable, and Helpful. The three types are: </p>
+                            <ul>
+                                <li><b>You Break It, You Fix It:</b> The student is responsible for fixing the problem they caused, whether it was accidental or intentional.</li>
+                                <li><b>Loss of Privilege:</b> This is used when a student's behavior shows they are not ready for the responsibility that comes with a particular privilege. The consequence is the temporary and directly related loss of that privilege.</li>
+                                <li><b>Positive Time-Out:</b> This is used when a student is beginning to lose self-control and needs a brief time and space to calm down and regroup before rejoining the group.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     <div class="accordion-item">
+                        <button class="accordion-header">De-escalation Strategies</button>
+                        <div class="accordion-content">
+                            <p>When a student's behavior is escalating, the most important factor is the adult's response. The adult's calm, non-anxious presence is the primary de-escalation tool. A student in this state is operating from their emotional "downstairs brain," and their "upstairs brain" for logic is essentially offline. Key strategies include:</p>
+                             <ul>
+                                <li><b>Use a Calm Tone:</b> Speak slowly and use a low, monotonous tone of voice.</li>
+                                <li><b>Validate Feelings, Not Behavior:</b> Acknowledge the student's emotion without condoning the action with phrases like, "I can see you are very angry right now".</li>
+                                <li><b>Give Space:</b> Do not invade the student's personal space, as this can be perceived as threatening. Stand at an angle rather than face-to-face.</li>
+                                <li><b>Offer Choices:</b> Giving simple, controlled choices can restore a sense of agency and reduce power struggles.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+                <button class="btn btn-secondary back-btn" data-target="home-screen">Back</button>
+            </div>
         </main>
-
         <footer>
-            </footer>
+            <p>Strategies are based on the principles in "From Disruption to Development: A Guide to Understanding and Managing Behavior in the K-5 Classroom."</p>
+        </footer>
     </div>
     <script src="script.js"></script>
 </body>
