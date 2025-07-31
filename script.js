@@ -1,17 +1,3 @@
-Of course. To make the app provide a new strategy in real time when a user clicks "Not Effective," you need to update the logic in your `script.js` file.
-
-The goal is to:
-
-1.  Keep track of the strategies already shown for a specific behavior.
-2.  When "Not Effective" is clicked, find a *different* strategy for the same behavior.
-3.  Display the new strategy immediately without making the user start over.
-4.  If no other strategies are available, inform the user.
-
-Here is the updated `script.js` file with these changes implemented. The key modifications are made to the `strategies` data structure (to allow for multiple strategies) and the event listener for the `ineffective-btn`.
-
-### **Updated `script.js`**
-
-```javascript
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- DATA: Strategies updated to be arrays, allowing for multiple options ---
@@ -211,4 +197,3 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initial Setup ---
     showScreen('home-screen');
 });
-```
