@@ -1,39 +1,97 @@
+Of course. To make the app provide a new strategy in real time when a user clicks "Not Effective," you need to update the logic in your `script.js` file.
+
+The goal is to:
+
+1.  Keep track of the strategies already shown for a specific behavior.
+2.  When "Not Effective" is clicked, find a *different* strategy for the same behavior.
+3.  Display the new strategy immediately without making the user start over.
+4.  If no other strategies are available, inform the user.
+
+Here is the updated `script.js` file with these changes implemented. The key modifications are made to the `strategies` data structure (to allow for multiple strategies) and the event listener for the `ineffective-btn`.
+
+### **Updated `script.js`**
+
+```javascript
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- DATA: Strategies from the provided document ---
+    // --- DATA: Strategies updated to be arrays, allowing for multiple options ---
     const strategies = {
         'Calling Out': {
-            Attention: "Use **Differential Reinforcement**. Intentionally give enthusiastic praise when the student raises their hand, and calmly ignore them when they call out. This teaches a better way to get their need for attention met.",
-            Escape: "This is unusual for this behavior. Consider if the student is calling out to distract from a task they find difficult. Try **Scaffolding** the task or offering support."
+            Attention: [
+                "Use **Differential Reinforcement**. Intentionally give enthusiastic praise when the student raises their hand, and calmly ignore them when they call out.",
+                "Use a **High-Probability Request Sequence**. First, give a few simple commands you know the student will follow (e.g., 'Touch your nose'), then give the target request ('Please wait for your turn').",
+                "Try **Planned Ignoring** for the calling out, paired with giving immediate positive attention for any appropriate, quiet behavior."
+            ],
+            Escape: [
+                "This is unusual for this behavior. Consider if the student is calling out to distract from a task they find difficult. Try **Scaffolding** the task or offering support."
+            ]
         },
         'Off-Task': {
-            Attention: "The student may be trying to get peer attention. Try a **High-Probability Request Sequence** to build momentum, followed by the on-task request. Also, ensure you are providing ample positive attention for on-task behavior.",
-            Escape: "The student is likely avoiding the task. Offer **Structured Choices** to increase their sense of autonomy, such as choosing which three problems to solve first or what color pen to use.",
-            Sensory: "The doodling or fidgeting may be a necessary sensory input. Could you provide a less distracting outlet, like a stress ball or allowing doodling on a separate notepad while listening?"
+            Attention: [
+                "Use a **Proximity Control** strategy. Simply move and stand near the student to non-verbally cue them back to the task, while providing positive attention for on-task behavior.",
+                "Try a **High-Probability Request Sequence** to build momentum, followed by the on-task request."
+            ],
+            Escape: [
+                "Offer **Structured Choices** to increase their sense of autonomy, such as choosing which three problems to solve first or what color pen to use.",
+                "The task may be too long. Break it into smaller, more manageable chunks and provide reinforcement upon completion of each chunk.",
+                "Use a 'First/Then' statement. 'First, complete this one row of problems, then you can take a 2-minute break'."
+            ],
+            Sensory: [
+                "The doodling or fidgeting may be a necessary sensory input. Provide a less distracting outlet, like a stress ball, resistance band on their chair, or allowing doodling on a separate notepad while listening."
+            ]
         },
         'Refusing Work': {
-            Escape: "This is a classic escape behavior, likely due to frustration or lack of skills. **Do not engage in a power struggle.** Instead, use **Effective Scaffolding**. Break the task into smaller chunks, model the first step, or provide sentence starters. A time-out here would be a reward.",
-            Attention: "The refusal is gaining a significant amount of your attention. Use **Planned Ignoring** of the refusal for a moment, engage with a nearby compliant student, and then calmly return to the student with a simple, direct prompt or a choice.",
-            Tangible: "The student may be refusing work because they want to do a preferred activity instead. Set up a **Behavior Contract**: 'First, complete these two problems, then you can have 5 minutes on the computer'."
+            Escape: [
+                "Use **Effective Scaffolding**. Do not engage in a power struggle. Break the task into smaller chunks, model the first step, or provide sentence starters.",
+                "Offer **Structured Choices** related to the assignment. 'Would you like to write your answer or draw it? Do you want to do the odd problems or the even problems?'",
+                "Implement **Behavioral Momentum**. Start with 3-5 simple requests the student is likely to follow ('Give me a high-five,' 'Tap the table') before giving the low-probability request ('Please start your work')."
+            ],
+            Attention: [
+                "Use **Planned Ignoring** of the refusal for a moment, engage with a nearby compliant student, and then calmly return to the student with a simple, direct prompt or a choice.",
+                "State the expectation and the positive outcome. 'When you finish your work, you will be able to choose a book to read.' Then, walk away to avoid a power struggle."
+            ],
+            Tangible: [
+                "Set up a **Behavior Contract**: 'First, complete these two problems, then you can have 5 minutes on the computer'."
+            ]
         },
         'Arguing': {
-            Escape: "The argument is a way to delay or escape the task. **Avoid getting drawn into the argument.** Use a simple, clear, and direct phrase: 'This is not negotiable. It's time to begin your work.' Then, disengage and focus on other students.",
-            Attention: "The student is seeking to engage you in a power struggle, which is a form of attention. Calmly state the expectation and the logical consequence for not meeting it, then walk away. 'If you continue to argue, you will lose the privilege of choosing your partner. The choice is yours.'."
+            Escape: [
+                "**Avoid getting drawn into the argument.** Use a simple, clear, and direct phrase: 'This is not negotiable. It's time to begin your work.' Then, disengage and focus on other students.",
+                "Use a calm, neutral tone and act as a 'broken record,' repeating the expectation once or twice without engaging with the content of the argument."
+            ],
+            Attention: [
+                "Calmly state the expectation and the logical consequence for not meeting it, then walk away. 'If you continue to argue, you will lose the privilege of choosing your partner. The choice is yours.'."
+            ]
         },
         'Physical Aggression': {
-            Default: "Your primary goal is safety and de-escalation. **Immediately shift to De-escalation Strategies.** Use a calm, low tone of voice. Say, 'I can see you're very upset.' Ensure the safety of other students. Do not try to teach or reason with the student until they are in the 'Recovery' phase."
+            Default: [
+                "Your primary goal is safety and de-escalation. **Immediately shift to De-escalation Strategies.** Use a calm, low tone of voice. Say, 'I can see you're very upset.' Ensure the safety of other students. Do not try to teach or reason with the student until they are in the 'Recovery' phase."
+            ]
         },
          'Emotional Outburst': {
-            Default: "The student is dysregulated and their rational brain is offline. **Your calm presence is the primary de-escalation tool.** Validate their feeling, not the behavior: 'It sounds like you're feeling really frustrated.'. Offer a controlled choice to a calming space: 'Would you like to go to the calm-down corner or put your head down here?'."
+            Default: [
+                "The student is dysregulated. **Your calm presence is the primary de-escalation tool.** Validate their feeling, not the behavior: 'It sounds like you're feeling really frustrated.'",
+                "Offer a controlled choice to a calming space: 'Would you like to go to the calm-down corner or put your head down here?'"
+            ]
         },
         'Avoidance': {
-            Escape: "This behavior signals an attempt to escape an academic or social struggle. Investigate the root cause. Provide academic support, check for understanding, and break the task into smaller steps. Praise any effort to start."
+            Escape: [
+                "This behavior signals an attempt to escape an academic or social struggle. Investigate the root cause. Provide academic support, check for understanding, and break the task into smaller steps. Praise any effort to start."
+            ]
         },
         'default': {
-            Attention: "Use **Differential Reinforcement**. Praise desired behaviors enthusiastically while using planned ignoring for the minor, attention-seeking misbehavior.",
-            Escape: "Offer **Structured Choices** to increase buy-in or **Scaffold** the task to reduce frustration.",
-            Sensory: "The behavior itself may be meeting a need. Can you provide a safer or less disruptive replacement behavior that serves the same sensory function?",
-            Tangible: "Use a clear 'First/Then' statement or create a simple **Behavior Contract**. 'First, you complete your task, then you can earn the tangible item.'"
+            Attention: [
+                "Use **Differential Reinforcement**. Praise desired behaviors enthusiastically while using planned ignoring for the minor, attention-seeking misbehavior."
+            ],
+            Escape: [
+                "Offer **Structured Choices** to increase buy-in or **Scaffold** the task to reduce frustration."
+            ],
+            Sensory: [
+                "The behavior itself may be meeting a need. Can you provide a safer or less disruptive replacement behavior that serves the same sensory function?"
+            ],
+            Tangible: [
+                "Use a clear 'First/Then' statement or create a simple **Behavior Contract**. 'First, you complete your task, then you can earn the tangible item.'"
+            ]
         }
     };
 
@@ -49,11 +107,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const effectiveBtn = document.getElementById('effective-btn');
     const ineffectiveBtn = document.getElementById('ineffective-btn');
     const accordionHeaders = document.querySelectorAll('.accordion-header');
-    
+
     // --- State ---
     let currentState = {
         behavior: null,
         function: null,
+        attemptedStrategies: [],
     };
 
     // --- Functions ---
@@ -64,21 +123,33 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById(screenId).classList.remove('hidden');
     }
 
-    function getStrategy(behavior, func) {
-        // Check for specific behavior-function pair
+    function getStrategies(behavior, func) {
         if (strategies[behavior] && strategies[behavior][func]) {
             return strategies[behavior][func];
         }
-        // Check for default strategies for the behavior (e.g., aggression, outburst)
         if (strategies[behavior] && strategies[behavior]['Default']) {
             return strategies[behavior]['Default'];
         }
-        // Fallback to default strategies for the function
         if (strategies['default'][func]) {
             return strategies['default'][func];
         }
-        return "No specific strategy found. Focus on building a positive relationship and re-examining the environment for triggers.";
+        return ["No specific strategy found. Focus on building a positive relationship and re-examining the environment for triggers."];
     }
+
+    function displayNewStrategy() {
+        const availableStrategies = getStrategies(currentState.behavior, currentState.function);
+        const newStrategies = availableStrategies.filter(s => !currentState.attemptedStrategies.includes(s));
+
+        if (newStrategies.length > 0) {
+            const strategy = newStrategies[0];
+            currentState.attemptedStrategies.push(strategy);
+            strategyText.innerHTML = strategy;
+        } else {
+            strategyText.innerHTML = "No additional strategies are available for this combination. Consider observing the behavior again to confirm its function or consult the Resource Library.";
+            ineffectiveBtn.style.display = 'none'; // Hide button if no more options
+        }
+    }
+
 
     // --- Event Listeners ---
     logBehaviorBtn.addEventListener('click', () => showScreen('log-behavior-screen'));
@@ -100,36 +171,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            // Reset state for a new behavior log
+            currentState.attemptedStrategies = [];
             currentState.behavior = selectedBehavior !== 'default' ? selectedBehavior : 'default';
             currentState.function = btn.dataset.function;
-            
-            const strategy = getStrategy(currentState.behavior, currentState.function);
-            strategyText.innerHTML = strategy; // Use innerHTML to render the <strong> and <b> tags
+
+            ineffectiveBtn.style.display = 'inline-block'; // Ensure button is visible
+            displayNewStrategy();
             showScreen('strategy-screen');
         });
     });
 
     effectiveBtn.addEventListener('click', () => {
         alert('Great! This effectiveness rating would be saved to personalize future recommendations.');
-        // In a real app, you would save this preference:
-        // Ex: saveEffectiveness(currentState.behavior, currentState.function, 'effective');
         commonBehaviorsSelect.value = 'default';
         document.getElementById('custom-behavior').value = '';
         showScreen('home-screen');
     });
 
     ineffectiveBtn.addEventListener('click', () => {
-        alert('Thank you for the feedback. The app will prioritize other strategies next time.');
-        // In a real app, you would deprioritize this strategy:
-        // Ex: saveEffectiveness(currentState.behavior, currentState.function, 'ineffective');
-        // And potentially offer an alternative. For now, we go back.
-         showScreen('log-behavior-screen');
+        // Instead of going back, just display a new strategy
+        displayNewStrategy();
     });
 
     accordionHeaders.forEach(header => {
         header.addEventListener('click', () => {
             const content = header.nextElementSibling;
-            // Basic toggle for one-at-a-time accordion
              if (content.style.maxHeight) {
                 content.style.maxHeight = null;
                 content.style.paddingTop = null;
@@ -144,3 +211,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initial Setup ---
     showScreen('home-screen');
 });
+```
