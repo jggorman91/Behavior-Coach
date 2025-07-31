@@ -3,37 +3,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DATA: Strategies from the provided document ---
     const strategies = {
         'Calling Out': {
-            [cite_start]Attention: "Use **Differential Reinforcement**. Intentionally give enthusiastic praise when the student raises their hand, and calmly ignore them when they call out. This teaches a better way to get their need for attention met[cite: 348, 349].",
-            Escape: "This is unusual for this behavior. Consider if the student is calling out to distract from a task they find difficult. [cite_start]Try **Scaffolding** the task or offering support[cite: 186]."
+            Attention: "Use **Differential Reinforcement**. Intentionally give enthusiastic praise when the student raises their hand, and calmly ignore them when they call out. This teaches a better way to get their need for attention met.",
+            Escape: "This is unusual for this behavior. Consider if the student is calling out to distract from a task they find difficult. Try **Scaffolding** the task or offering support."
         },
         'Off-Task': {
-            Attention: "The student may be trying to get peer attention. [cite_start]Try a **High-Probability Request Sequence** to build momentum, followed by the on-task request[cite: 350, 351, 352]. [cite_start]Also, ensure you are providing ample positive attention for on-task behavior[cite: 360].",
-            Escape: "The student is likely avoiding the task. [cite_start]Offer **Structured Choices** to increase their sense of autonomy, such as choosing which three problems to solve first or what color pen to use[cite: 182, 183].",
+            Attention: "The student may be trying to get peer attention. Try a **High-Probability Request Sequence** to build momentum, followed by the on-task request. Also, ensure you are providing ample positive attention for on-task behavior.",
+            Escape: "The student is likely avoiding the task. Offer **Structured Choices** to increase their sense of autonomy, such as choosing which three problems to solve first or what color pen to use.",
             Sensory: "The doodling or fidgeting may be a necessary sensory input. Could you provide a less distracting outlet, like a stress ball or allowing doodling on a separate notepad while listening?"
         },
         'Refusing Work': {
-            [cite_start]Escape: "This is a classic escape behavior, likely due to frustration or lack of skills[cite: 185, 186]. **Do not engage in a power struggle.** Instead, use **Effective Scaffolding**. [cite_start]Break the task into smaller chunks, model the first step, or provide sentence starters[cite: 186]. [cite_start]A time-out here would be a reward[cite: 67].",
-            Attention: "The refusal is gaining a significant amount of your attention. [cite_start]Use **Planned Ignoring** of the refusal for a moment, engage with a nearby compliant student, and then calmly return to the student with a simple, direct prompt or a choice[cite: 358].",
-            Tangible: "The student may be refusing work because they want to do a preferred activity instead. [cite_start]Set up a **Behavior Contract**: 'First, complete these two problems, then you can have 5 minutes on the computer'[cite: 355]."
+            Escape: "This is a classic escape behavior, likely due to frustration or lack of skills. **Do not engage in a power struggle.** Instead, use **Effective Scaffolding**. Break the task into smaller chunks, model the first step, or provide sentence starters. A time-out here would be a reward.",
+            Attention: "The refusal is gaining a significant amount of your attention. Use **Planned Ignoring** of the refusal for a moment, engage with a nearby compliant student, and then calmly return to the student with a simple, direct prompt or a choice.",
+            Tangible: "The student may be refusing work because they want to do a preferred activity instead. Set up a **Behavior Contract**: 'First, complete these two problems, then you can have 5 minutes on the computer'."
         },
         'Arguing': {
-            Escape: "The argument is a way to delay or escape the task. **Avoid getting drawn into the argument.** Use a simple, clear, and direct phrase: 'This is not negotiable. It's time to begin your work.' [cite_start]Then, disengage and focus on other students[cite: 301].",
-            Attention: "The student is seeking to engage you in a power struggle, which is a form of attention. Calmly state the expectation and the logical consequence for not meeting it, then walk away. 'If you continue to argue, you will lose the privilege of choosing your partner. [cite_start]The choice is yours.'[cite: 331, 332]."
+            Escape: "The argument is a way to delay or escape the task. **Avoid getting drawn into the argument.** Use a simple, clear, and direct phrase: 'This is not negotiable. It's time to begin your work.' Then, disengage and focus on other students.",
+            Attention: "The student is seeking to engage you in a power struggle, which is a form of attention. Calmly state the expectation and the logical consequence for not meeting it, then walk away. 'If you continue to argue, you will lose the privilege of choosing your partner. The choice is yours.'."
         },
         'Physical Aggression': {
-            [cite_start]Default: "Your primary goal is safety and de-escalation[cite: 278]. **Immediately shift to De-escalation Strategies.** Use a calm, low tone of voice. Say, 'I can see you're very upset.' Ensure the safety of other students. [cite_start]Do not try to teach or reason with the student until they are in the 'Recovery' phase[cite: 287, 315]."
+            Default: "Your primary goal is safety and de-escalation. **Immediately shift to De-escalation Strategies.** Use a calm, low tone of voice. Say, 'I can see you're very upset.' Ensure the safety of other students. Do not try to teach or reason with the student until they are in the 'Recovery' phase."
         },
          'Emotional Outburst': {
-            [cite_start]Default: "The student is dysregulated and their rational brain is offline[cite: 285, 286]. [cite_start]**Your calm presence is the primary de-escalation tool [cite: 284][cite_start].** Validate their feeling, not the behavior: 'It sounds like you're feeling really frustrated.'[cite: 296]. [cite_start]Offer a controlled choice to a calming space: 'Would you like to go to the calm-down corner or put your head down here?'[cite: 304]."
+            Default: "The student is dysregulated and their rational brain is offline. **Your calm presence is the primary de-escalation tool.** Validate their feeling, not the behavior: 'It sounds like you're feeling really frustrated.'. Offer a controlled choice to a calming space: 'Would you like to go to the calm-down corner or put your head down here?'."
         },
         'Avoidance': {
-            [cite_start]Escape: "This behavior signals an attempt to escape an academic or social struggle[cite: 38, 53]. Investigate the root cause. [cite_start]Provide academic support, check for understanding, and break the task into smaller steps[cite: 68]. Praise any effort to start."
+            Escape: "This behavior signals an attempt to escape an academic or social struggle. Investigate the root cause. Provide academic support, check for understanding, and break the task into smaller steps. Praise any effort to start."
         },
         'default': {
-            Attention: "Use **Differential Reinforcement**. [cite_start]Praise desired behaviors enthusiastically while using planned ignoring for the minor, attention-seeking misbehavior[cite: 348, 358].",
-            [cite_start]Escape: "Offer **Structured Choices** to increase buy-in or **Scaffold** the task to reduce frustration[cite: 182, 186].",
+            Attention: "Use **Differential Reinforcement**. Praise desired behaviors enthusiastically while using planned ignoring for the minor, attention-seeking misbehavior.",
+            Escape: "Offer **Structured Choices** to increase buy-in or **Scaffold** the task to reduce frustration.",
             Sensory: "The behavior itself may be meeting a need. Can you provide a safer or less disruptive replacement behavior that serves the same sensory function?",
-            [cite_start]Tangible: "Use a clear 'First/Then' statement or create a simple **Behavior Contract**[cite: 355]. 'First, you complete your task, then you can earn the tangible item.'"
+            Tangible: "Use a clear 'First/Then' statement or create a simple **Behavior Contract**. 'First, you complete your task, then you can earn the tangible item.'"
         }
     };
 
